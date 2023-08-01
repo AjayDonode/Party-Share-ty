@@ -1,0 +1,43 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start" >
+      <ion-back-button defaultHref="/dashboard"></ion-back-button>
+    </ion-buttons>
+    <ion-title>New Event</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  
+    <ion-item lines="full">
+      <ion-label position="floating">Event name</ion-label>
+      <ion-input type="text" placeholder="#name" required [(ngModel)]="event.name" ></ion-input>
+    </ion-item> 
+    <ion-item lines="full">
+      <ion-label position="floating" >Start on</ion-label>
+      <ion-input type="text" placeholder="#Date" [(ngModel)]="event.startOn" required></ion-input>
+    </ion-item>
+    <ion-item lines="full">
+      <ion-label position="floating" >End by</ion-label>
+      <ion-input type="text" placeholder="#Date" required [(ngModel)]="event.endBy"></ion-input>
+    </ion-item>
+    <ion-item lines="full">
+      <ion-label position="floating" >Title</ion-label>
+      <ion-input type="text" [(ngModel)]="event.title" placeholder="#Title" required></ion-input>
+    </ion-item>
+    <ion-item lines="full">
+      <ion-label position="floating">Description</ion-label>
+      <ion-textarea rows="5" placeholder="Enter a description" [(ngModel)]="event.description"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Picture</ion-label>
+      <ion-input type="file" (change)="onFileSelected($event)"></ion-input>
+      <img [src]="imageUrl" *ngIf="imageUrl" style="max-width: 200px; max-height: 200px;">
+    </ion-item>
+    <ion-row>
+      <ion-col> 
+      <ion-button type="submit" (click)="addEvent()" expand="block"  >Save</ion-button>
+      </ion-col>
+    </ion-row>
+
+</ion-content>

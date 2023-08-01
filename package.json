@@ -1,5 +1,5 @@
 {
-  "name": "myApp",
+  "name": "Share-Photos1.0",
   "version": "0.0.1",
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
@@ -14,19 +14,24 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^16.0.0",
-    "@angular/common": "^16.0.0",
-    "@angular/compiler": "^16.0.0",
-    "@angular/core": "^16.0.0",
+    "@angular/common": "^16.1.2",
+    "@angular/core": "^16.1.2",
+    "@angular/fire": "^7.6.1",
     "@angular/forms": "^16.0.0",
     "@angular/platform-browser": "^16.0.0",
     "@angular/platform-browser-dynamic": "^16.0.0",
-    "@angular/router": "^16.0.0",
+    "@angular/router": "^16.1.2",
     "@capacitor/app": "5.0.3",
+    "@capacitor/camera": "^5.0.4",
     "@capacitor/core": "5.0.5",
+    "@capacitor/filesystem": "^5.0.4",
     "@capacitor/haptics": "5.0.4",
+    "@capacitor/ios": "5.0.5",
     "@capacitor/keyboard": "5.0.4",
+    "@capacitor/preferences": "^5.0.4",
     "@capacitor/status-bar": "5.0.4",
-    "@ionic/angular": "^7.0.0",
+    "@ionic/angular": "^7.1.3",
+    "@ionic/pwa-elements": "^3.2.1",
     "ionicons": "^7.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
@@ -40,8 +45,8 @@
     "@angular-eslint/schematics": "^16.0.0",
     "@angular-eslint/template-parser": "^16.0.0",
     "@angular/cli": "^16.0.0",
-    "@angular/compiler": "^16.0.0",
-    "@angular/compiler-cli": "^16.0.0",
+    "@angular/compiler": "^16.1.2",
+    "@angular/compiler-cli": "^16.1.2",
     "@angular/language-service": "^16.0.0",
     "@capacitor/cli": "5.0.5",
     "@ionic/angular-toolkit": "^9.0.0",
@@ -62,7 +67,7 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
     "ts-node": "^8.3.0",
-    "typescript": "~5.0.2"
+    "typescript": "~5.0"
   },
-  "description": "An Ionic project"
+  "description": "Share Party Photos"
 }

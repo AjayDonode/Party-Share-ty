@@ -1,4 +1,9 @@
 import { Component } from '@angular/core';
+import { PhotoService } from '../services/photo.service';
+import * as firebase from 'firebase/compat';
+import { Console } from 'console';
+import { GalleryPhoto } from '@capacitor/camera';
+import { EventService } from '../services/event.service';
 
 @Component({
   selector: 'app-tab1',
@@ -7,6 +12,37 @@ import { Component } from '@angular/core';
 })
 export class Tab1Page {
 
-  constructor() {}
+  public savedPhotos:GalleryPhoto[]= [];
+  constructor(public photoService:PhotoService, public eventService:EventService) {
+    
+  }
+  
+  async ngOnInit() {
+    // await this.photoService.loadSaved();
+    
+  }
+  //const storageRef = firebase.storage().ref();
+  async loadImages(){
+   this.photoService.loadSaved().then(response=> {
+    console.log("After Upload done");
+    //console.log(response.length)
+   for (let i = 0; i < response.length; i++) {
+    this.photoService.uploadFileToFileStore(response[i]).then(output=> {
+    console.log("Uploaded file ")
+  })
+  }
+  });
+  }
+
+  upoadImages(){
+    //this.savedPhotos = this.savedPhotos as GalleryPhoto[];
+    this.savedPhotos.forEach((item)=> {
+      console.log(item.webPath);
+      console.log(""+item.exif);
+    });
+    
+    
+    
+  }
 
 }
