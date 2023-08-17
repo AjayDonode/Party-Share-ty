@@ -11,4 +11,9 @@ export class UserService {
   getCurrentUser(){
     console.log(this.authServcie.getCurrentUser());
   }
+
+  logOut(){
+    this.authServcie.SignOut();
+  }
+
 }

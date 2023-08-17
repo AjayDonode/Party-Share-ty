@@ -1,0 +1,8 @@
+<ion-content>
+  <ion-slides [initialSlide]="1">
+    <ion-slide *ngFor="let image of images">
+      <h1>{{image}}</h1>
+      <!-- <img [src]="getImage(image)"> -->
+    </ion-slide>
+  </ion-slides>
+</ion-content>

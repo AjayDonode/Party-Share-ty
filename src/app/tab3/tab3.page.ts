@@ -2,6 +2,8 @@ import { Component, NgModule } from '@angular/core';
 import { EventService } from '../services/event.service';
 import { PhotoService } from '../services/photo.service';
 import { PartyImage } from '../VO/party-image';
+import { ModalController } from '@ionic/angular';
+import { SlideShowComponent } from '../component/slide-show/slide-show.component';
 
 @Component({
   selector: 'app-tab3',
@@ -17,7 +19,9 @@ export class Tab3Page {
   
   private selectedEvent:any;
   partyImages: PartyImage[] = [];
-  constructor(private eventService:EventService,public photoService:PhotoService) {}
+  constructor(private eventService:EventService,
+    public photoService:PhotoService, 
+    private modalController:ModalController) {}
 
   async ngOnInit() {
     // await this.photoService.loadSaved();
@@ -25,6 +29,17 @@ export class Tab3Page {
     this.photoService.getAllImages().subscribe(res => {
       this.partyImages = res;
     });
+  }
+
+  async openGalleryImages(image:PartyImage){
+    const modal = await this.modalController.create({
+      component:SlideShowComponent,
+      componentProps:{
+        images:this.partyImages,
+        selectedImage:image,
+      },
+    });
+    await modal.present();
   }
 
 }

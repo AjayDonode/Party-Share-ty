@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { EventService } from 'src/app/services/event.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,7 +11,7 @@ import { EventService } from 'src/app/services/event.service';
 })
 export class DashboardPage implements OnInit {
   eventList: any[] = [];
-  constructor(public router:Router, public eventService:EventService) { }
+  constructor(public router:Router, public eventService:EventService,public userService:UserService) { }
 
   ngOnInit() {
     this.loadAllEvents();
@@ -32,6 +33,11 @@ export class DashboardPage implements OnInit {
     console.log(event);
     this.eventService.setSelectedEvent(event);
     this.router.navigate(['/home']);
+  }
+  
+  logOut(){
+  this.userService.logOut();
+  this.router.navigate([''])
   }
  
 }
