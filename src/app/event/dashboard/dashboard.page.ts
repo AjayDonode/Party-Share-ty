@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
 import { EventService } from 'src/app/services/event.service';
+import { User } from 'src/app/services/user';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -11,6 +12,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class DashboardPage implements OnInit {
   eventList: any[] = [];
+  currentUser:any = null;
   constructor(public router:Router, public eventService:EventService,public userService:UserService) { }
 
   ngOnInit() {
@@ -23,6 +25,9 @@ export class DashboardPage implements OnInit {
 
   loadAllEvents(){
     // if(this.currentUserId !== null) {
+      this.currentUser = this.userService.getCurrentUser();
+      console.log("Current user is "+this.currentUser.displayName);
+      console.log("Current user is "+this.currentUser.email);
       this.eventService.getAllPartyEvents().subscribe(res => {
         this.eventList = res;
       });
@@ -38,6 +43,10 @@ export class DashboardPage implements OnInit {
   logOut(){
   this.userService.logOut();
   this.router.navigate([''])
+  }
+
+  showProfile(){
+    this.router.navigate(['/profile'])
   }
  
 }

@@ -38,6 +38,14 @@ const routes: Routes = [
     path: 'add-event',
     loadChildren: () => import('./event/add-event/add-event.module').then( m => m.AddEventPageModule)
   },
+  {
+    path: 'profile',
+    loadChildren: () => import('./event/profile/profile.module').then( m => m.ProfilePageModule)
+  },
+  {
+    path: 'edit-profile-modal',
+    loadChildren: () => import('./event/profile/modal/edit-profile-modal/edit-profile-modal.module').then( m => m.EditProfileModalPageModule)
+  },
 ];
 @NgModule({
   imports: [

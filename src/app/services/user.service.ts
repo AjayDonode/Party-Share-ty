@@ -9,7 +9,7 @@ export class UserService {
   constructor(public authServcie : AuthService) { }
 
   getCurrentUser(){
-    console.log(this.authServcie.getCurrentUser());
+    return this.authServcie.getCurrentUser();
   }
 
   logOut(){

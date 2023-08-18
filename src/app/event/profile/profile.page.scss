@@ -1,0 +1,23 @@
+.profile-card {
+    margin: 16px;
+    
+  }
+  
+  .profile-image-container {
+    display: flex;
+    justify-content: flex-start; /* Move content to the right */
+    align-items: left;
+    margin-right: 16px; /* Add some spacing between text and image */
+  }
+  
+  
+  .profile-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%; /* Creates a circular shape */
+    object-fit: cover; /* Ensures the image scales appropriately */
+  }
+
+  .edit-button {
+    margin-right: 10px;
+  }

@@ -8,7 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./sign-in.page.scss'],
 })
 export class SignInPage implements OnInit {
-
+  loginError = undefined;
   constructor(public authService: AuthService,
     public router: Router) { }
 
@@ -22,12 +22,13 @@ export class SignInPage implements OnInit {
         if (this.authService.isEmailVerified) {
           this.router.navigate(['dashboard']);
         } else {
-          window.alert('Email is not verified');
+         // this.loginError = "Email is not verified";
           return false;
         }
       })
       .catch((error) => {
-        window.alert(error.message);
+        this.loginError = error.message;
+        //window.alert(error.message);
       });
   }
   

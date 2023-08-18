@@ -8,6 +8,7 @@
 </ion-header>
 <ion-content justify-content-center padding>
   <form>
+    <div *ngIf="loginError" class="error-message">{{ loginError }}</div>
     <ion-item lines="full">
       <ion-label position="floating">Email</ion-label>
       <ion-input type="text" #email required></ion-input>
@@ -26,8 +27,19 @@
         >
       </ion-col>
     </ion-row>
-    <span class="divider line one-line">or</span>
+    <span class="divider line one-line"></span>
     <ion-row>
+      <ion-col>
+        <ion-button
+          type="submit"
+          color="danger"
+          
+          expand="block"
+        >
+        <ion-icon name="logo-twitter"></ion-icon> Login with X
+        </ion-button>
+      </ion-col>
+      |
       <ion-col>
         <ion-button
           type="submit"
@@ -35,10 +47,10 @@
           (click)="authService.GoogleAuth()"
           expand="block"
         >
-          Login with Google
+        <ion-icon name="logo-google"></ion-icon> Login with Google
         </ion-button>
       </ion-col>
     </ion-row>
-    <ion-row> Dont have an account! <a routerLink='/sign-up'> Register </a></ion-row>
+    <ion-row> &nbsp; Create new account! <a routerLink='/sign-up'> Register </a></ion-row>
   </form>
 </ion-content>
