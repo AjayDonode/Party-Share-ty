@@ -24,22 +24,17 @@ export class Tab1Page {
   //const storageRef = firebase.storage().ref();
   async loadImages(){
    this.photoService.loadSaved().then(response=> {
-    console.log("After Upload done");
-    //console.log(response.length)
-   for (let i = 0; i < response.length; i++) {
-    this.photoService.uploadFileToFileStore(response[i]).then(output=> {
-    console.log("Uploaded file ")
-  })
-  }
+    this.savedPhotos = response;
   });
   }
 
   upoadImages(){
     //this.savedPhotos = this.savedPhotos as GalleryPhoto[];
-    this.savedPhotos.forEach((item)=> {
-      console.log(item.webPath);
-      console.log(""+item.exif);
-    });
+    for (let i = 0; i < this.savedPhotos.length; i++) {
+      this.photoService.uploadFileToFileStore(this.savedPhotos[i]).then(output=> {
+      console.log("Uploaded file ")
+    })
+    }
     
     
     

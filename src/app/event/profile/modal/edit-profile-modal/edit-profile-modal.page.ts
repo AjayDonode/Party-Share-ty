@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavParams } from '@ionic/angular';
+import { User } from 'src/app/services/user';
 
 @Component({
   selector: 'app-edit-profile-modal',
@@ -8,10 +9,14 @@ import { ModalController } from '@ionic/angular';
 })
 export class EditProfileModalPage implements OnInit {
 
-  constructor(public modalController: ModalController) { }
+  user: any = null;
+
+  constructor(private navParams: NavParams,public modalController: ModalController) { }
 
   ngOnInit() {
+    this.user = this.navParams.get('data');
   }
+  
   async closeModal() {
     await this.modalController.dismiss();
   }

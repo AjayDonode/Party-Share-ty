@@ -1,21 +1,44 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>edit-profile-modal</ion-title>
     <ion-buttons slot="start" >
-      <ion-back-button (click)="closeModal()"></ion-back-button>
+      <ion-back-button defaultHref="/profile" (click)="closeModal()"></ion-back-button>
     </ion-buttons>
-    <ion-buttons slot="end">
-      <ion-button (click)="closeModal()">
-        <ion-icon name="close"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+    <ion-title>Edit Profile</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
+<ion-content>
+  <ion-card class="profile-card">
+  <ion-list>
+    <ion-item>
+      <ion-label>Email:</ion-label>
+      <ion-input [(ngModel)]="user.email">{{user.email}}</ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Display Name:</ion-label>
+      <ion-input [(ngModel)]="user.displayName">{{user.displayName}}</ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Photo URL:</ion-label>
+      <ion-input [(ngModel)]="user.photoURL"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Email Verified:</ion-label>
+      <ion-checkbox [(ngModel)]="user.emailVerified"></ion-checkbox>
+    </ion-item>
+   
+  </ion-list>
+  <ion-footer>
     <ion-toolbar>
-      <ion-title size="large">edit-profile-modal</ion-title>
+      
+      <ion-buttons slot="end">
+        <ion-button > <ion-icon name="save"></ion-icon>Save 
+        </ion-button>  
+      </ion-buttons>
     </ion-toolbar>
-  </ion-header>
+  </ion-footer>
+</ion-card>
 </ion-content>

@@ -26,17 +26,17 @@
       </ion-buttons>
       <ion-title >Dashboard</ion-title>
     </ion-toolbar>
-   
   </ion-header>
+  <div *ngIf="eventList.length > 0; else noEventsMessage">
   <ion-card  *ngFor="let event of eventList">
     <!-- <ion-card  *ngFor="let event of eventList" style="background-image: url({{event.imageUrl}})" ></ion-card> -->
-    <img alt="${{event.title}}" [src]="event.imageUrl"/>
+    <div class="image-container"> <img alt="{{event.title}}" [src]="event.imageUrl" class="event-image"/></div>
     <ion-card-header>
-      <ion-card-title>${{event.title}} </ion-card-title>
-      <ion-card-subtitle>${{event.name}}</ion-card-subtitle>
+      <ion-card-title>{{event.title}} </ion-card-title>
+      <ion-card-subtitle>{{event.name}}</ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
-      ${{event.description}}
+      {{event.description}}
     </ion-card-content>
     <ion-footer>
       <ion-toolbar>
@@ -46,16 +46,27 @@
         <ion-buttons slot="end">
           <ion-button fill="clear"><ion-icon name="qr-code-outline"></ion-icon></ion-button>
           <ion-button fill="clear"><ion-icon name="share-outline"></ion-icon></ion-button>
-          <ion-button fill="clear"><ion-icon name="create-outline"></ion-icon></ion-button>
-          <ion-button fill="clear"><ion-icon name="trash-outline"></ion-icon></ion-button>    
+          <ion-button fill="clear" (click)="updateEvent(event)"><ion-icon name="create-outline"></ion-icon></ion-button>
+          <ion-button fill="clear" (click)="removeEvent(event)"><ion-icon name="trash-outline"></ion-icon></ion-button>    
         </ion-buttons>
       </ion-toolbar>
     </ion-footer>
   </ion-card>
-
+</div>
+<ng-template #noEventsMessage>
+  <ion-card> <ion-card-title> No Event </ion-card-title>
+    <ion-card-subtitle>Add your event</ion-card-subtitle>
+    <ion-card-content>
+      <ion-fab-button>
+        <ion-icon name="add" (click)="addEvent()" ></ion-icon>
+      </ion-fab-button>
+    </ion-card-content>
+  </ion-card>
+   
+</ng-template>
   <ion-fab slot="fixed" vertical="bottom" horizontal="end">
     <ion-fab-button>
-      <ion-icon name="add"(click)="addEvent()" ></ion-icon>
+      <ion-icon name="add" (click)="addEvent()" ></ion-icon>
     </ion-fab-button>
   </ion-fab>
 </ion-content>

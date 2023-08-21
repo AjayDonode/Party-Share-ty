@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
+import { PartyEvent } from 'src/app/VO/party-event';
 import { EventService } from 'src/app/services/event.service';
 import { User } from 'src/app/services/user';
 import { UserService } from 'src/app/services/user.service';
+import { isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'app-dashboard',
@@ -23,15 +25,25 @@ export class DashboardPage implements OnInit {
     this.router.navigate(['/add-event']);
   }
 
+  updateEvent(eventObj:PartyEvent){
+    console.log(eventObj);
+    this.router.navigate(['/add-event'],{ state: { event: eventObj } });
+  }
+
+  removeEvent(eventObj:PartyEvent){
+    console.log(eventObj);
+    this.eventService.deletePartyEvent(eventObj);
+  }
+
   loadAllEvents(){
-    // if(this.currentUserId !== null) {
       this.currentUser = this.userService.getCurrentUser();
-      console.log("Current user is "+this.currentUser.displayName);
-      console.log("Current user is "+this.currentUser.email);
-      this.eventService.getAllPartyEvents().subscribe(res => {
+      if(this.currentUser === null ||  this.currentUser === undefined)
+        this.router.navigate(['/home'])
+      else{
+      this.eventService.getPartyEventByHost(this.currentUser.uid).subscribe(res => {
         this.eventList = res;
       });
-    // }
+     }
   }
 
   openMain(event:any){

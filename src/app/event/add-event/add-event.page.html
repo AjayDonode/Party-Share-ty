@@ -8,32 +8,41 @@
 </ion-header>
 
 <ion-content>
-  
+  <ion-item> <ion-card>
+    <ion-label position="stacked">Upload your card banner</ion-label>
+    <ion-input type="file" (change)="onFileSelected($event)"></ion-input>
+    <ion-img [src]="imageUrl" *ngIf="imageUrl" ></ion-img>
+    <ion-img [src]="partyEvent.imageUrl" *ngIf="partyEvent.imageUrl" ></ion-img>
+  </ion-card>
+  </ion-item>
     <ion-item lines="full">
-      <ion-label position="floating">Event name</ion-label>
-      <ion-input type="text" placeholder="#name" required [(ngModel)]="event.name" ></ion-input>
+      <ion-label>Event name</ion-label>
+      <ion-input required [(ngModel)]="partyEvent.name" ></ion-input>
     </ion-item> 
-    <ion-item lines="full">
-      <ion-label position="floating" >Start on</ion-label>
-      <ion-input type="text" placeholder="#Date" [(ngModel)]="event.startOn" required></ion-input>
+    <ion-item >
+      <ion-label >Start on</ion-label>
+      <ion-datetime displayFormat="MMM DD, YYYY" [(ngModel)]="partyEvent.startOn"></ion-datetime>
     </ion-item>
-    <ion-item lines="full">
-      <ion-label position="floating" >End by</ion-label>
-      <ion-input type="text" placeholder="#Date" required [(ngModel)]="event.endBy"></ion-input>
-    </ion-item>
-    <ion-item lines="full">
-      <ion-label position="floating" >Title</ion-label>
-      <ion-input type="text" [(ngModel)]="event.title" placeholder="#Title" required></ion-input>
-    </ion-item>
-    <ion-item lines="full">
-      <ion-label position="floating">Description</ion-label>
-      <ion-textarea rows="5" placeholder="Enter a description" [(ngModel)]="event.description"></ion-textarea>
-    </ion-item>
+    
     <ion-item>
-      <ion-label position="stacked">Picture</ion-label>
-      <ion-input type="file" (change)="onFileSelected($event)"></ion-input>
-      <img [src]="imageUrl" *ngIf="imageUrl" style="max-width: 200px; max-height: 200px;">
+      <ion-label position="floating" >End by</ion-label>
+      <ion-datetime displayFormat="MMM DD, YYYY" [(ngModel)]="partyEvent.endBy"></ion-datetime>
     </ion-item>
+    <ion-item lines="full">
+      <ion-label >Title</ion-label>
+      <ion-input [(ngModel)]="partyEvent.title"></ion-input>
+    </ion-item>
+    <ion-item lines="full">
+      <ion-label >Description</ion-label>
+      <ion-textarea  
+      labelPlacement="floating"
+      [counter]="true"
+      maxlength="20"
+      [counterFormatter]="customCounterFormatter" 
+      placeholder="Enter a description" 
+      [(ngModel)]="partyEvent.description"></ion-textarea>
+    </ion-item>
+   
     <ion-row>
       <ion-col> 
       <ion-button type="submit" (click)="addEvent()" expand="block"  >Save</ion-button>

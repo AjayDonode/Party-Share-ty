@@ -1,7 +1,7 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.org.dnex',
+  appId: 'com.dnex.org',
   appName: 'Share-Photos1.0',
   webDir: 'www',
   server: {

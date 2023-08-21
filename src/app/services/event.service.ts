@@ -9,7 +9,7 @@ import { Observable, filter } from 'rxjs';
 })
 export class EventService {
 
-  //private partyEventlist: Observable<PartyEvent[]>;
+  private partyEvents: Observable<PartyEvent[]> | undefined;
   private partyEventCollection: AngularFirestoreCollection<PartyEvent>;
   private readonly collectionName = 'partyEvents';
   private selectedEvent:PartyEvent | undefined;
@@ -29,6 +29,14 @@ export class EventService {
     return this.partyEventCollection.doc<PartyEvent>(id).valueChanges();
   }
 
+  getPartyEventByHost(hostedBy: string) :Observable<PartyEvent[]>{
+    //return this.partyEventCollection.doc<PartyEvent>(hostedBy).valueChanges();
+    console.log("hosted by "+hostedBy)
+    return this.firestore.collection<PartyEvent>('partyEvents', ref => 
+      ref.where('hostedBy', '==', hostedBy)
+    ).valueChanges();
+  }
+
   // Get all party events
   getAllPartyEvents(): Observable<PartyEvent[]> {
     return this.partyEventCollection.valueChanges();
@@ -42,8 +50,8 @@ export class EventService {
   }
 
   // Delete a party event
-  deletePartyEvent(id: string): Promise<void> {
-    return this.partyEventCollection.doc(id).delete();
+  deletePartyEvent(partyEvent: PartyEvent): Promise<void> {
+    return this.partyEventCollection.doc(partyEvent.id).delete();
   }
 
   getSelectedEvent(){

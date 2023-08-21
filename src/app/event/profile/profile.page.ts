@@ -29,8 +29,10 @@ export class ProfilePage implements OnInit {
 
   async openEditModal() {
     const modal = await this.modalController.create({
-      component: EditProfileModalPage, // Replace with your actual edit modal component
-      // You can pass data to the modal if needed
+      component: EditProfileModalPage, 
+      componentProps: {
+        data: this.user
+      }
     });
     await modal.present();
   }
