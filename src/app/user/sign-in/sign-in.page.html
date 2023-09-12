@@ -7,49 +7,54 @@
   </ion-toolbar>
 </ion-header>
 <ion-content justify-content-center padding>
-  <form>
-    <div *ngIf="loginError" class="error-message">{{ loginError }}</div>
-    <ion-item lines="full">
-      <ion-label position="floating">Email</ion-label>
-      <ion-input type="text" #email required></ion-input>
-    </ion-item>
-    <ion-item lines="full">
-      <ion-label position="floating">Password</ion-label>
-      <ion-input type="password" #password required></ion-input>
-    </ion-item>
-    <ion-row>
-      <ion-col>
-        <ion-button
-          type="submit"
-          (click)="logIn(email, password)"
-          expand="block"
-          >Login</ion-button
-        >
-      </ion-col>
-    </ion-row>
-    <span class="divider line one-line"></span>
-    <ion-row>
-      <ion-col>
-        <ion-button
-          type="submit"
-          color="danger"
-          expand="block"
-        >
-        <ion-icon name="logo-twitter"></ion-icon> Login with X
-        </ion-button>
-      </ion-col>
-     |
-      <ion-col>
-        <ion-button
-          type="submit"
-          color="danger"
-          (click)="authService.GoogleAuth()"
-          expand="block"
-        >
-        <ion-icon name="logo-google"></ion-icon> Login with Google
-        </ion-button>
-      </ion-col>
-    </ion-row>
-    <ion-row> &nbsp; Create new account! &nbsp;<a routerLink='/sign-up'> Register </a></ion-row>
-  </form>
+  <form [formGroup]="validationsForm" (ngSubmit)="login(validationsForm.value)">
+  <ion-card>
+    <ion-img src="assets/Party_People.png"></ion-img>
+    
+      <div *ngIf="loginError" class="error-message">{{ loginError }}</div>
+      <ion-item lines="full">
+        <ion-label position="floating">Email</ion-label>
+        <ion-input type="email" placeholder="yourid@email.com" formControlName="email" required></ion-input>
+      </ion-item>
+      <ion-text color="danger" *ngIf="this.validationsForm.get('email').hasError('required') && (this.validationsForm.get('email').touched || submitted)">
+        <!-- <p *ngIf="validationsForm.get('email').errors.required">Email is required.</p>
+        <p *ngIf="validationsForm.get('email').errors.email">Invalid email format.</p> -->
+        Error
+      </ion-text>
+      <ion-item lines="full">
+        <ion-label position="floating">Password</ion-label>
+        <ion-input type="password" #password required></ion-input>
+      </ion-item>
+      <ion-row>
+        <ion-col>
+          <ion-button type="submit" expand="block">Login</ion-button>
+        </ion-col>
+      </ion-row>
+      <span class="divider line one-line"></span>
+      <ion-row>
+        <ion-col>
+          <ion-button
+            type="submit"
+            color="danger"
+            expand="block"
+          >
+          <ion-icon name="logo-x"></ion-icon> <b>X</b>&nbsp; Login
+          </ion-button>
+        </ion-col>
+       |
+        <ion-col>
+          <ion-button
+            type="submit"
+            color="danger"
+            (click)="authService.GoogleAuth()"
+            expand="block"
+          >
+          <ion-icon name="logo-google"></ion-icon>&nbsp; Login 
+          </ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row> &nbsp; Create new account! &nbsp;<a routerLink='/sign-up'> Register </a></ion-row>
+    
+  </ion-card>
+</form>
 </ion-content>
