@@ -31,7 +31,6 @@ log.txt
 
 # Node
 /node_modules
-/node_modules_bkp
 npm-debug.log
 yarn-error.log
 
