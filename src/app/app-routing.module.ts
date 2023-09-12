@@ -5,7 +5,10 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 // import { RegisterPage } from './register/register.page';
 const routes: Routes = [
   
-
+  {
+    path: 'home1',
+    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
+  },
   {
     path: 'home',
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
