@@ -3,16 +3,16 @@ PODS:
     - CapacitorCordova
   - CapacitorApp (5.0.3):
     - Capacitor
-  - CapacitorCamera (5.0.4):
+  - CapacitorCamera (5.0.7):
     - Capacitor
   - CapacitorCordova (5.0.5)
-  - CapacitorFilesystem (5.0.4):
+  - CapacitorFilesystem (5.1.3):
     - Capacitor
   - CapacitorHaptics (5.0.4):
     - Capacitor
   - CapacitorKeyboard (5.0.4):
     - Capacitor
-  - CapacitorPreferences (5.0.4):
+  - CapacitorPreferences (5.0.6):
     - Capacitor
   - CapacitorStatusBar (5.0.4):
     - Capacitor
@@ -51,12 +51,12 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Capacitor: b1248915663add1bd6567e2b67c1c1fa3abcf5e8
   CapacitorApp: 7a5dec8b33573707164b293475d5c89ba684364a
-  CapacitorCamera: 9b5c8e809c1042f263994f97ba846aa37e974f12
+  CapacitorCamera: 084b0b228bba7d00587910337b1c89e93b1d32ab
   CapacitorCordova: f8c06b897c74ee8f7701fe10e6443b40822bc83a
-  CapacitorFilesystem: e1bdfab09b95b181c844c16abcfda45ec8e8ed6b
+  CapacitorFilesystem: 9b4641db3d6d62b6cc1bf0a6a09681ebaea696b7
   CapacitorHaptics: e36653b37326d71bb35ae42b944124037dbc3d97
   CapacitorKeyboard: d1b25fde6f19744ad09c890862aefc6e2a7ded3d
-  CapacitorPreferences: 82a9ecf5355283a3b3cf7ac217d8c5534c4dee8a
+  CapacitorPreferences: f03954bcb0ff09c792909e46bff88e3183c16b10
   CapacitorStatusBar: 190e0321b8734f4244d0c81baa183a00d5806ddf
 
 PODFILE CHECKSUM: 645c6f0ebd6fe237b8c3df63febaa44115e4826d

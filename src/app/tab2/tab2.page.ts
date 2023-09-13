@@ -16,11 +16,15 @@ export class Tab2Page {
   constructor(private eventService:EventService,public photoService:PhotoService) {}
 
   async ngOnInit() {
-    // await this.photoService.loadSaved();
     this.selectedEvent = this.eventService.getSelectedEvent();
-    this.photoService.getAllImages().subscribe(res => {
+    console.log(this.selectedEvent);
+    this.photoService.getAllImagesByEvent(this.selectedEvent).subscribe(res => {
       this.partyImages = res;
     });
+  }
+
+  deleteItem(item: PartyImage) {
+    this.photoService.deleteImage(item);
   }
 
 }

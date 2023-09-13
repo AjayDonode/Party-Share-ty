@@ -5,7 +5,6 @@ import { PartyEvent } from 'src/app/VO/party-event';
 import { EventService } from 'src/app/services/event.service';
 import { User } from 'src/app/services/user';
 import { UserService } from 'src/app/services/user.service';
-import { isNullOrUndefined } from 'util';
 
 @Component({
   selector: 'app-dashboard',

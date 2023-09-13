@@ -7,19 +7,46 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <form>    
+  <form [formGroup]="registerForm" (ngSubmit)="signUp()">    
+    <ion-card>
+    <ion-item lines="full">
+      <ion-label position="floating">Name</ion-label>
+      <ion-input type="text" formControlName="name" required></ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="registerForm.get('name')?.hasError('required') && (registerForm.get('email')?.touched) || submitted">
+      &nbsp; Name is required.
+    </ion-text>
+
     <ion-item lines="full">
       <ion-label position="floating">Email</ion-label>
-      <ion-input type="text" #email required></ion-input>
-    </ion-item> 
+      <ion-input type="text" formControlName="email" required></ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="registerForm.get('email')?.hasError('required') && (registerForm.get('email')?.touched || submitted)">
+      &nbsp; Email is required.
+    </ion-text>
+    <ion-text color="danger" *ngIf="registerForm.get('email')?.hasError('email') && (registerForm.get('email')?.touched || submitted)">
+      &nbsp; Enter valid email id.
+    </ion-text>
+ 
     <ion-item lines="full">
       <ion-label position="floating">Password</ion-label>
-      <ion-input type="password" #password required></ion-input>
+      <ion-input type="password" formControlName="password" required></ion-input>
     </ion-item>
+    <ion-text color="danger" *ngIf="registerForm.get('password')?.hasError('required') && (registerForm.get('email')?.touched)|| submitted">
+      &nbsp; Enter Password
+    </ion-text>
+    <!-- <ion-item lines="full">
+      <ion-label position="floating">Confirm Password</ion-label>
+      <ion-input type="password" formControlName="cpassword" required></ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="registerForm.get('cpassword')?.hasError('required') && (registerForm.get('cpassword')?.touched)|| submitted">
+      &nbsp; Enter Confrim Password
+    </ion-text> -->
     <ion-row>
       <ion-col> 
-      <ion-button type="submit" (click)="signUp(email, password)" expand="block">Register</ion-button>
+      <ion-button type="submit" expand="block">Register</ion-button>
       </ion-col>
     </ion-row>
+  </ion-card>
   </form>
 </ion-content>

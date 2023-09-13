@@ -44,9 +44,6 @@ export class AuthService {
           }
         });
        // return result.user;
-      })
-      .catch((error) => {
-        window.alert("From Auth Service "+ error.message);
       });
   }
   // Sign up with email/password

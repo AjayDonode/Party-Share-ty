@@ -7,24 +7,27 @@
   </ion-toolbar>
 </ion-header>
 <ion-content justify-content-center padding>
-  <form>
-    <div *ngIf="loginError" class="error-message">{{ loginError }}</div>
+  <form  [formGroup]="loginForm" (ngSubmit)="logIn()">
+    <ion-card>
+      <ion-img src="assets/Party_People.png"></ion-img>
+    
+      <ion-text *ngIf="loginError" color="danger" class="error-message">{{ loginError }}</ion-text>
     <ion-item lines="full">
       <ion-label position="floating">Email</ion-label>
-      <ion-input type="text" #email required></ion-input>
+      <ion-input type="text" formControlName="email" required></ion-input>
     </ion-item>
+    <ion-text color="danger" *ngIf="loginForm.get('email')?.hasError('required') && (loginForm.get('email')?.touched || submitted)">
+      &nbsp; Email is required.
+    </ion-text>
+    <ion-text color="danger" *ngIf="loginForm.get('email')?.hasError('email') && (loginForm.get('email')?.touched || submitted)">&nbsp; Enter valid email id.</ion-text>
     <ion-item lines="full">
       <ion-label position="floating">Password</ion-label>
-      <ion-input type="password" #password required></ion-input>
+      <ion-input type="password" formControlName="password" required></ion-input>
     </ion-item>
+    <ion-text color="danger" *ngIf="loginForm.get('password')?.hasError('required') && (loginForm.get('password')?.touched || submitted)">&nbsp; Password is required.</ion-text>
     <ion-row>
       <ion-col>
-        <ion-button
-          type="submit"
-          (click)="logIn(email, password)"
-          expand="block"
-          >Login</ion-button
-        >
+        <ion-button type="submit"[disabled]="loginForm.invalid" expand="block">Login</ion-button>
       </ion-col>
     </ion-row>
     <span class="divider line one-line"></span>
@@ -35,7 +38,7 @@
           color="danger"
           expand="block"
         >
-        <ion-icon name="logo-twitter"></ion-icon> Login with X
+          <ion-icon name="logo-x"></ion-icon> <b>X</b>&nbsp; Login
         </ion-button>
       </ion-col>
      |
@@ -46,10 +49,12 @@
           (click)="authService.GoogleAuth()"
           expand="block"
         >
-        <ion-icon name="logo-google"></ion-icon> Login with Google
+          <ion-icon name="logo-google"></ion-icon>&nbsp; Login 
         </ion-button>
       </ion-col>
     </ion-row>
     <ion-row> &nbsp; Create new account! &nbsp;<a routerLink='/sign-up'> Register </a></ion-row>
+    
+  </ion-card>
   </form>
 </ion-content>
