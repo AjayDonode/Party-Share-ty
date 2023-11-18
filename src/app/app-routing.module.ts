@@ -45,6 +45,18 @@ const routes: Routes = [
     path: 'edit-profile-modal',
     loadChildren: () => import('./event/profile/modal/edit-profile-modal/edit-profile-modal.module').then( m => m.EditProfileModalPageModule)
   },
+  {
+    path: 'guest-login',
+    loadChildren: () => import('./user/guest-login/guest-login.module').then( m => m.GuestLoginPageModule)
+  },
+  {
+    path: 'join-event',
+    loadChildren: () => import('./event/join-event/join-event.module').then( m => m.JoinEventPageModule)
+  },
+  {
+    path: 'grant-access-modal',
+    loadChildren: () => import('./event/dashboard/modal/grant-access-modal/grant-access-modal.module').then( m => m.GrantAccessModalPageModule)
+  },
 ];
 @NgModule({
   imports: [

@@ -9,18 +9,19 @@
 
 <ion-content [fullscreen]="true">
   <!-- <h3 *ngIf="images.length == 0" class="ion-padding ion-text-center">Please Select Image!</h3> -->
-   <h3> &nbsp; Your uploads </h3>
+   <h3> &nbsp; Uploaded images </h3>
+   <ion-text> Delete unwanted pics by swiping left</ion-text>
 	<ion-list>
-		<ion-item-sliding *ngFor="let partyImage of partyImages; index as position;">
+		<ion-item-sliding *ngFor="let partyImage of partyImages; index as position;" (ionSwipe)="deleteItem(partyImage)">
 		<ion-item>
 			<ion-thumbnail slot="start">
 				<!-- <ion-img [src]="photo.webPath"></ion-img> -->
         		<ion-img [src]="partyImage.imageUrl"></ion-img>
 			</ion-thumbnail>
-			<ion-label class="ion-text-wrap"> {{partyImage.uploadedBy}} </ion-label>
+			 <ion-label class="ion-text-wrap"> {{partyImage.id}} </ion-label> 
 		</ion-item>
 			<ion-item-options side="end">
-				<ion-item-option color="danger" (click)="deleteItem(partyImage)">
+				<ion-item-option color="danger" (ionSwipe)="deleteItem(partyImage)">
 				  Delete
 				</ion-item-option>
     </ion-item-options>

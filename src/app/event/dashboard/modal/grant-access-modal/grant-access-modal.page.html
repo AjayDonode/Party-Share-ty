@@ -1,0 +1,35 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start" >
+      <ion-back-button defaultHref="/dashboard" (click)="closeModal()"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Grant Access</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title >Grant Access</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-card class="profile-card">
+      <ion-card-header>
+        <ion-card-title>Grant All<ion-checkbox>
+        
+        </ion-checkbox> </ion-card-title>
+        <!-- <ion-card-subtitle>{{partyEvent.name}}</ion-card-subtitle> -->
+      </ion-card-header>
+      <div>
+        <ion-list *ngFor="let userAccess of userAccessList" >
+          <ion-item>
+            <ion-checkbox [checked]="userAccess.granted" (ionChange)="updateGrant($event,userAccess)">
+              {{userAccess.userid}}
+            </ion-checkbox>
+          </ion-item>
+        </ion-list>
+      </div>
+    </ion-card>
+
+</ion-content>

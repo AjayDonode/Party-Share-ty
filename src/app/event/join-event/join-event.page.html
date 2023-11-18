@@ -1,0 +1,59 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start" >
+      <ion-back-button defaultHref="/dashboard"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Join Event</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+  <ion-card>
+    <ion-searchbar placeholder="Enter event Id" [debounce]="1000" (ionInput)="onSearch($event)"></ion-searchbar>
+    <div *ngIf="partyEvent">
+      <!-- <ion-card> -->
+        <!-- <ion-card  *ngFor="let event of eventList" style="background-image: url({{event.imageUrl}})" ></ion-card> -->
+        <div class="image-container"> <img alt="{{partyEvent.title}}" [src]="partyEvent.imageUrl" class="event-image" /></div>
+        <ion-card-header>
+          <ion-card-title>{{partyEvent.title}} </ion-card-title>
+          <ion-card-subtitle>{{partyEvent.name}}</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          {{partyEvent.description}}
+          <div id="form-content">
+          <ion-list>
+            <ion-item>
+              <ion-input type="email" fill="solid" label="Passcode" labelPlacement="floating" helperText="Enter a valid passcode" errorText="Invalid passcode"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-buttons slot="start">
+             <ion-label style="color: red;">Dont have Passcode ?</ion-label> <ion-button fill="clear" (click)="joinEvent(partyEvent)">Request Access</ion-button>
+            </ion-buttons>
+        </ion-item>
+          </ion-list>
+        </div>
+      
+        </ion-card-content>
+        <ion-footer>
+          <ion-toolbar>
+            
+          </ion-toolbar>
+        </ion-footer>
+      <!-- </ion-card> -->
+    </div>
+   
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Your event requests</ion-card-title>
+      <!-- <ion-card-subtitle>{{partyEvent.name}}</ion-card-subtitle> -->
+    </ion-card-header>
+    <div>
+      <ion-list *ngFor="let userAccess of userAccessList" >
+        <ion-item><ion-label>{{userAccess.eventid}}</ion-label> 
+          <ion-icon color="warning" slot="end" name="warning-outline" size="large" *ngIf=!userAccess.granted></ion-icon>
+          <ion-icon color="success" slot="end" name="checkmark-done-circle-outline" size="large"  *ngIf=userAccess.granted></ion-icon>
+        </ion-item>
+      </ion-list>
+    </div>
+  </ion-card>
+</ion-content>

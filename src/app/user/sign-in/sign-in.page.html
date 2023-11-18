@@ -7,10 +7,10 @@
   </ion-toolbar>
 </ion-header>
 <ion-content justify-content-center padding>
-  <form  [formGroup]="loginForm" (ngSubmit)="logIn()">
+  
     <ion-card>
       <ion-img src="assets/Party_People.png"></ion-img>
-    
+      <form  [formGroup]="loginForm" (ngSubmit)="logIn()">
       <ion-text *ngIf="loginError" color="danger" class="error-message">{{ loginError }}</ion-text>
     <ion-item lines="full">
       <ion-label position="floating">Email</ion-label>
@@ -30,6 +30,7 @@
         <ion-button type="submit"[disabled]="loginForm.invalid" expand="block">Login</ion-button>
       </ion-col>
     </ion-row>
+  </form>
     <span class="divider line one-line"></span>
     <ion-row>
       <ion-col>
@@ -56,5 +57,5 @@
     <ion-row> &nbsp; Create new account! &nbsp;<a routerLink='/sign-up'> Register </a></ion-row>
     
   </ion-card>
-  </form>
+ 
 </ion-content>

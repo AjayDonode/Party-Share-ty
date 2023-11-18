@@ -28,7 +28,7 @@ export class AuthService {
         JSON.parse(localStorage.getItem('user')!);
       } else {
         localStorage.setItem('user', 'null');
-        JSON.parse(localStorage.getItem('user')!);
+       // JSON.parse(localStorage.getItem('user')!);
       }
     });
   }
@@ -40,7 +40,7 @@ export class AuthService {
         this.SetUserData(result.user);
         this.afAuth.authState.subscribe((user) => {
           if (user) {
-            this.router.navigate(['dashboard']);
+            this.router.navigate(['/dashboard']);
           }
         });
        // return result.user;
@@ -65,7 +65,7 @@ export class AuthService {
     return this.afAuth.currentUser
       .then((u: any) => u.sendEmailVerification())
       .then(() => {
-        this.router.navigate(['verify-email']);
+        this.router.navigate(['/verify-email']);
       });
   }
   // Reset Forggot password
@@ -91,7 +91,7 @@ export class AuthService {
   // Sign in with Google
   GoogleAuth() {
     return this.AuthLogin(new auth.GoogleAuthProvider()).then((res: any) => {
-      this.router.navigate(['dashboard']);
+        this.router.navigate(['/dashboard']);
     });
   }
   // Auth logic to run auth providers
@@ -99,8 +99,8 @@ export class AuthService {
     return this.afAuth
       .signInWithPopup(provider)
       .then((result) => {
-        this.router.navigate(['dashboard']);
         this.SetUserData(result.user);
+      //  this.router.navigate(['/dashboard']);
       })
       .catch((error) => {
         window.alert(error);
@@ -113,7 +113,7 @@ export class AuthService {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(
       `users/${user.uid}`
     );
-    console.log(user.displayName);
+    console.log("Loged in User is "+user.email);
     const userData: User = {
       uid: user.uid,
       email: user.email,
@@ -128,8 +128,7 @@ export class AuthService {
   // Sign out
   SignOut() {
     return this.afAuth.signOut().then(() => {
-      
-      localStorage.removeItem('user');
+      localStorage.clear();
       this.router.navigate(['']);
     });
   }

@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: DashboardPage
+  },
+  {
+    path: 'grant-access-modal',
+    loadChildren: () => import('./modal/grant-access-modal/grant-access-modal-routing.module').then( m => m.GrantAccessModalPageRoutingModule)
   }
 ];
 

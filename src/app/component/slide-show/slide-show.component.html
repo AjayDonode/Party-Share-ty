@@ -1,8 +1,21 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="closeModal()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header> -->
 <ion-content>
-  <ion-slides [initialSlide]="1">
-    <ion-slide *ngFor="let image of images">
-      <h1>{{image}}</h1>
+  <swiper-container pagination="true" pagination-type="fraction" initialSlide=2 >
+    <swiper-slide *ngFor="let image of images" initialSlide=2>
+      <!-- <h1>{{image.imageUrl}}</h1> -->
+      <img [src]="image.imageUrl" style="width: 100%; height: 100%;"> 
       <!-- <img [src]="getImage(image)"> -->
-    </ion-slide>
-  </ion-slides>
+    </swiper-slide>
+  </swiper-container>
+  <ion-button fill="clear" size="small" class="close-button" (click)="closeModal()">
+    <ion-icon name="close-circle-outline"></ion-icon>
+  </ion-button>
 </ion-content>

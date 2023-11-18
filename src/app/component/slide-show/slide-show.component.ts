@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 import { PartyImage } from 'src/app/VO/party-image';
+
 
 @Component({
   selector: 'app-slide-show',
@@ -8,10 +10,14 @@ import { PartyImage } from 'src/app/VO/party-image';
 })
 export class SlideShowComponent  implements OnInit {
   @Input()
-  images: string[] = [];
+  images: PartyImage[] = [];
   @Input()
   selectedImage!: PartyImage;
-  constructor() { }
+  @Input()
+  imageIndex:Number=0
+
+
+  constructor(private modalController: ModalController) { }
 
   ngOnInit() {}
 
@@ -23,4 +29,8 @@ export class SlideShowComponent  implements OnInit {
     return imageUrl;
   }
 
+
+  closeModal() {
+    this.modalController.dismiss();
+  }
 }

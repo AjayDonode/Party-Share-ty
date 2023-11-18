@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Guest Login
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form (ngSubmit)="onSubmit()">
+    <ion-item>
+      <ion-label position="floating">User ID</ion-label>
+      <ion-input type="text" [(ngModel)]="userId"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Party ID</ion-label>
+      <ion-input type="text" [(ngModel)]="partyId"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Passcode</ion-label>
+      <ion-input type="password" [(ngModel)]="passcode"></ion-input>
+    </ion-item>
+    <ion-button type="submit">Join Party</ion-button>
+  </form>
+</ion-content>

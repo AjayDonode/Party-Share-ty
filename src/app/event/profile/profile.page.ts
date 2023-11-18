@@ -23,8 +23,8 @@ export class ProfilePage implements OnInit {
    }
 
   ngOnInit() {
-    console.log(this.user.email);
-    this.user = this.userService.getCurrentUser();
+    // console.log(this.user.email);
+    // this.user = this.userService.getCurrentUser();
   }
 
   async openEditModal() {

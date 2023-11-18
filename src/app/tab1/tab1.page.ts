@@ -25,6 +25,7 @@ export class Tab1Page {
   async loadImages(){
    this.photoService.loadSaved().then(response=> {
     this.savedPhotos = response;
+    this.upoadImages()
   });
   }
 

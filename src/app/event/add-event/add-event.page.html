@@ -8,45 +8,57 @@
 </ion-header>
 
 <ion-content>
-  <ion-item> <ion-card>
-    <ion-label position="stacked">Upload your card banner</ion-label>
+  <form [formGroup]="eventForm" (ngSubmit)="addEvent()">
+  <ion-card>
+    <!-- <ion-label>{{partyEvent.imageUrl}}</ion-label> -->
+    <ion-img *ngIf="partyEvent.imageUrl" [src]="partyEvent.imageUrl"  ></ion-img>
+    <ion-item lines="full"> 
+    <ion-label position="floating"></ion-label>
     <ion-input type="file" (change)="onFileSelected($event)"></ion-input>
-    <ion-img [src]="imageUrl" *ngIf="imageUrl" ></ion-img>
-    <ion-img [src]="partyEvent.imageUrl" *ngIf="partyEvent.imageUrl" ></ion-img>
-  </ion-card>
-  </ion-item>
-    <ion-item lines="full">
-      <ion-label>Event name</ion-label>
-      <ion-input required [(ngModel)]="partyEvent.name" ></ion-input>
-    </ion-item> 
-    <ion-item >
-      <ion-label >Start on</ion-label>
-      <ion-datetime displayFormat="MMM DD, YYYY" [(ngModel)]="partyEvent.startOn"></ion-datetime>
-    </ion-item>
+    <!--  -->
     
-    <ion-item>
-      <ion-label position="floating" >End by</ion-label>
-      <ion-datetime displayFormat="MMM DD, YYYY" [(ngModel)]="partyEvent.endBy"></ion-datetime>
-    </ion-item>
+  </ion-item>
+
     <ion-item lines="full">
+      <ion-label position="floating">Event name</ion-label>
+      <ion-input formControlName="name" required></ion-input>
+    </ion-item> 
+    <ion-text color="danger" *ngIf="eventForm.get('name')?.hasError('required') && (eventForm.get('name')?.touched)">
+      &nbsp; Name is required.
+    </ion-text>
+    <ion-item lines="full">
+      <ion-label position="floating">Start on</ion-label>
+      <ion-input placeholder="MM/DD/YYYY" formControlName="startOn" required></ion-input>
+    </ion-item>   
+
+    <ion-item lines="full">
+      <ion-label position="floating" >End by</ion-label>
+      <ion-input placeholder="MM/DD/YYYY" formControlName="endBy" ></ion-input>
+    </ion-item>
+    <!-- <ion-item lines="full">
       <ion-label >Title</ion-label>
       <ion-input [(ngModel)]="partyEvent.title"></ion-input>
-    </ion-item>
+    </ion-item> -->
     <ion-item lines="full">
       <ion-label >Description</ion-label>
       <ion-textarea  
       labelPlacement="floating"
       [counter]="true"
-      maxlength="20"
+       maxlength="100"
       [counterFormatter]="customCounterFormatter" 
       placeholder="Enter a description" 
-      [(ngModel)]="partyEvent.description"></ion-textarea>
+      formControlName="description"></ion-textarea>
     </ion-item>
+    <ion-text color="danger" *ngIf="eventForm.get('description')?.hasError('required') && (eventForm.get('description')?.touched)">
+      &nbsp; Description is required.
+    </ion-text>
    
     <ion-row>
       <ion-col> 
-      <ion-button type="submit" (click)="addEvent()" expand="block"  >Save</ion-button>
+      <ion-button type="submit"  expand="block">Save</ion-button>
       </ion-col>
     </ion-row>
-
+  </ion-card>
+  </form>
 </ion-content>
+

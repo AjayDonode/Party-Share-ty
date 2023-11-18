@@ -6,69 +6,116 @@
   </ion-header>
   <ion-content class="ion-padding">
     <ion-list>
-    <ion-item>
-      <ion-icon name="person" (click)="showProfile()"></ion-icon>
-      <ion-label>Profile</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-icon name="log-out" (click)="logOut()"></ion-icon>
-      <ion-label>Log Off</ion-label>
-    </ion-item>
-  </ion-list></ion-content>
+      <ion-item (click)="showProfile()">
+        <ion-icon name="person"></ion-icon>
+        <ion-label>Profile</ion-label>
+      </ion-item>
+      <ion-item (click)="logOut()">
+        <ion-icon name="log-out"></ion-icon>
+        <ion-label>Log Off</ion-label>
+      </ion-item>
+    </ion-list></ion-content>
 </ion-menu>
 <div class="ion-page" id="main-content">
-<ion-content>
-  <ion-header>
-    
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-      <ion-title >Dashboard</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <div *ngIf="eventList.length > 0; else noEventsMessage">
-  <ion-card  *ngFor="let event of eventList">
-    <!-- <ion-card  *ngFor="let event of eventList" style="background-image: url({{event.imageUrl}})" ></ion-card> -->
-    <div class="image-container"> <img alt="{{event.title}}" [src]="event.imageUrl" class="event-image"/></div>
-    <ion-card-header>
-      <ion-card-title>{{event.title}} </ion-card-title>
-      <ion-card-subtitle>{{event.name}}</ion-card-subtitle>
-    </ion-card-header>
-    <ion-card-content>
-      {{event.description}}
-    </ion-card-content>
-    <ion-footer>
+  <ion-content>
+    <ion-header>
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-button fill="clear" (click)="openMain(event)">Upload</ion-button>
+          <ion-menu-button></ion-menu-button>
         </ion-buttons>
-        <ion-buttons slot="end">
-          <ion-button fill="clear"><ion-icon name="qr-code-outline"></ion-icon></ion-button>
-          <ion-button fill="clear"><ion-icon name="share-outline"></ion-icon></ion-button>
-          <ion-button fill="clear" (click)="updateEvent(event)"><ion-icon name="create-outline"></ion-icon></ion-button>
-          <ion-button fill="clear" (click)="removeEvent(event)"><ion-icon name="trash-outline"></ion-icon></ion-button>    
-        </ion-buttons>
+        <ion-title>Dashboard</ion-title>
       </ion-toolbar>
-    </ion-footer>
-  </ion-card>
-</div>
-<ng-template #noEventsMessage>
-  <ion-card> <ion-img src="assets/Party_People_sm1.png"></ion-img>
-    <ion-card-title> You dont have any events </ion-card-title>
-    <ion-card-subtitle>Add your event</ion-card-subtitle>
-    <ion-card-content>
-      <ion-fab-button>
-        <ion-icon name="add" (click)="addEvent()" ></ion-icon>
-      </ion-fab-button>
-    </ion-card-content>
-  </ion-card>
-   
-</ng-template>
-  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
-    <ion-fab-button>
-      <ion-icon name="add" (click)="addEvent()" ></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
-</ion-content>
+    </ion-header>
+    <div>
+      <ion-item>
+        <ion-fab-button size="small">
+          <ion-icon name="add"  (click)="addEvent()"></ion-icon></ion-fab-button>
+        <ion-label> &nbsp; My Events</ion-label>
+      </ion-item>
+      <div *ngIf="eventList.length > 0; else noEventsMessage">
+        <swiper-container pagination="true" pagination-type="fraction">
+          <swiper-slide *ngFor="let event of eventList">
+            <ion-card>
+              <!-- <ion-card  *ngFor="let event of eventList" style="background-image: url({{event.imageUrl}})" ></ion-card> -->
+              <div class="image-container"> <img alt="{{event.title}}" [src]="event.imageUrl" class="event-image" />
+              </div>
+              <ion-card-header>
+                <ion-card-title>{{event.title}} </ion-card-title>
+                <ion-card-subtitle>{{event.name}}</ion-card-subtitle>
+              </ion-card-header>
+              <ion-card-content>
+                {{event.description}}
+              </ion-card-content>
+              <ion-footer>
+                <ion-toolbar>
+                  <ion-buttons slot="start">
+                    <ion-button fill="clear" (click)="openMain(event)">Upload</ion-button>
+                  </ion-buttons>
+                  <ion-buttons slot="end">
+                    <ion-button fill="clear"><ion-icon name="qr-code-outline"></ion-icon></ion-button>
+                    <ion-button fill="clear" (click)="grantEvent(event)"><ion-icon name="id-card-outline"></ion-icon></ion-button>
+                    <ion-button fill="clear" (click)="updateEvent(event)"><ion-icon
+                        name="create-outline"></ion-icon></ion-button>
+                    <ion-button fill="clear" (click)="removeEvent(event)"><ion-icon
+                        name="trash-outline"></ion-icon></ion-button>
+                  </ion-buttons>
+                </ion-toolbar>
+              </ion-footer>
+            </ion-card>
+          </swiper-slide>
+        </swiper-container>
+      </div>
+      <!-- Link Event Page to join events created by Hosts -->  
+      <ion-item>
+        <ion-fab-button  size="small">
+          <ion-icon name="link" (click)="joinEvent()"></ion-icon></ion-fab-button>
+        <ion-label> &nbsp; Join Event</ion-label>
+      </ion-item>
+      <div *ngIf="sharedEvents.length > 0; else noEventsMessage">
+        <swiper-container pagination="true" pagination-type="fraction">
+          <swiper-slide *ngFor="let event of sharedEvents">
+            <ion-card>
+              <!-- <ion-card  *ngFor="let event of eventList" style="background-image: url({{event.imageUrl}})" ></ion-card> -->
+              <div class="image-container"> <img alt="{{event.title}}" [src]="event.imageUrl" class="event-image" />
+              </div>
+              <ion-card-header>
+                <ion-card-title>{{event.title}} by {{event.hostedBy}} </ion-card-title>
+                <ion-card-subtitle>{{event.name}}</ion-card-subtitle>
+              </ion-card-header>
+              <ion-card-content>
+                {{event.description}}
+              </ion-card-content>
+              <ion-footer>
+                <ion-toolbar>
+                  <ion-buttons slot="start">
+                    <ion-button fill="clear" (click)="openMain(event)">Upload</ion-button>
+                  </ion-buttons>
+                  <ion-buttons slot="end">
+                    <ion-button fill="clear"><ion-icon name="qr-code-outline"></ion-icon></ion-button>
+                    <ion-button fill="clear"><ion-icon name="share-outline"></ion-icon></ion-button>
+                    <ion-button fill="clear" (click)="updateEvent(event)"><ion-icon
+                        name="create-outline"></ion-icon></ion-button>
+                    <ion-button fill="clear" (click)="removeEvent(event)"><ion-icon
+                        name="trash-outline"></ion-icon></ion-button>
+                  </ion-buttons>
+                </ion-toolbar>
+              </ion-footer>
+            </ion-card>
+          </swiper-slide>
+        </swiper-container>
+      </div>
+
+    </div>
+    <ng-template #noEventsMessage>
+      <ion-card> <ion-img src="assets/Party_People_sm1.png"></ion-img>
+        <ion-card-title> You dont have any events </ion-card-title>
+        <ion-card-subtitle>Add your event</ion-card-subtitle>
+        <ion-card-content>
+          <!-- <ion-fab-button>
+            <ion-icon name="add" (click)="addEvent()"></ion-icon>
+          </ion-fab-button> -->
+        </ion-card-content>
+      </ion-card>
+    </ng-template>
+  </ion-content>
 </div>

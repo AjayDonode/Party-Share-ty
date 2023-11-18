@@ -1,15 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Platform } from '@ionic/angular';
-import { Plugins } from '@capacitor/core';
 import { Camera, GalleryPhoto } from '@capacitor/camera';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Filesystem, FilesystemDirectory } from '@capacitor/filesystem';
-import { strict } from 'assert';
 import { Observable, finalize } from 'rxjs';
 import { PartyImage } from '../VO/party-image';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { UserService } from './user.service';
-import { PartyEvent } from '../VO/party-event';
 
 @Injectable({
   providedIn: 'root'
@@ -23,15 +20,18 @@ export class PhotoService {
   public imgArray = [];
   private imageCollection!: AngularFirestoreCollection<PartyImage>;
 
-  constructor(private platforme: Platform, private userService: UserService, private firestore: AngularFirestore, private storage: AngularFireStorage) {
-    //this.platform = platforme;
+  constructor(private platforme: Platform, private userService: UserService, 
+    private firestore: AngularFirestore, private storage: AngularFireStorage) {
+      // this.imageCollection = firestore.collection<PartyImage>('images');
   }
-
+  
   public async loadSaved() {
+    
     Camera.pickImages({ quality: 100, height: 210, width: 210, correctOrientation: true, limit: 100 }).then(results => {
       if (results.photos.length > 0) {
         for (let i = 0; i < results.photos.length; i++) {
           this.photos.push(results.photos[i]);
+         // this.uploadFileToFileStore(results.photos[i])
         }
       }
     },
@@ -43,11 +43,10 @@ export class PhotoService {
 
   public async uploadFileToFileStore(photo: GalleryPhoto) {
     let partyImage: PartyImage = {
-
       title: '',
       partyeventid: '',
       uploadedOn: new Date(),
-      uploadedBy: '',
+      uploadedBy: this.userService.getCurrentUser().uid,
       imageUrl: ''
     }
 
@@ -62,10 +61,11 @@ export class PhotoService {
           ref.getDownloadURL().subscribe(url => {
             this.downloadURL = url;
             partyImage.id = this.firestore.createId();
+            partyImage.partyeventid = JSON.parse(localStorage.getItem('selectedEvent')!).id;
             partyImage.imageUrl = url;
             partyImage.uploadedBy = this.userService.getCurrentUser().uid;
             partyImage.uploadedOn = new Date();
-            this.firestore.collection('images').add(partyImage);
+            this.firestore.collection('images').doc(partyImage.id).set(partyImage);
           });
         })
       ).subscribe();
@@ -87,35 +87,62 @@ export class PhotoService {
   });
 
 
-  public getAllImages(): Observable<any[]> {
-    return this.firestore.collection('images').valueChanges();
-  }
+  // public getAllImages(): Observable<any[]> {
+  //   return this.firestore.collection('images').valueChanges();
+  // }
 
-  public getAllImagesByEvent(partyEvent: PartyEvent): Observable<any[]> {
+  public getAllImagesByEvent(selectedEventId: string): Observable<any[]> {
     const uid = this.userService.getCurrentUser().uid;
     this.imageCollection = this.firestore.collection<PartyImage>('images', ref => {
-      // Compose a query using multiple .where() methods
-      return ref.where('partyeventid', '==', partyEvent.id);
+      return ref.where('partyeventid', '==', selectedEventId);
     });
     return this.imageCollection.valueChanges();
   }
 
-
   public deleteImage(image: PartyImage) {
-    // this.storage.ref(image.imageUrl);
-    // return this.imageCollection.doc(image.id).delete();
+    console.log("image.id : "+image.id)
+    return this.imageCollection.doc(image.id).delete();
+  }
 
-    const imageRef = this.imageCollection.doc(image.id).ref;
-    const fileRef = this.storage.ref(image.imageUrl);
 
-    return Promise.all([
-      imageRef.delete(),
-      fileRef.delete()
-    ]).then(() => {
-      console.log('Image and file deleted successfully');
-    }).catch((error) => {
-      console.error('Error deleting image and file:', error);
-    });
+  //**Donwload and dave photos to album  */
+
+  async downloadAndSaveImage(imageUrl: string, fileName: string) {
+   //const url = 'https://example.com/images/';
+  // const album = 'downloaded_now';
+  
+  // // Get the list of images from the URL
+  // const response = await HTTP.get(imageUrl);
+  // const data = JSON.parse(response.data);
+  // const images = data.images;
+  
+  // // Create the album if it doesn't exist
+  // const albumExists = await Filesystem.isDirectory({
+  //   path: album,
+  //   directory: FilesystemDirectory.Pictures,
+  // });
+  // if (!albumExists) {
+  //   await Filesystem.mkdir({
+  //     path: album,
+  //     directory: FilesystemDirectory.Pictures,
+  //     recursive: false,
+  //   });
+  // }
+  
+  // // Download each image and save it to the album
+  // for (const image of images) {
+  //   const imageUrl = url + image;
+  //   const response = await HTTP.downloadFile(imageUrl);
+  //   const fileName = imageUrl.split('/').pop();
+  //   await Filesystem.writeFile({
+  //     path: `${album}/${fileName}`,
+  //     data: response.data,
+  //     directory: FilesystemDirectory.Pictures,
+  //     encoding: FilesystemEncoding.UTF8,
+  //   });
+  // }
+  
+  console.log('All images downloaded and saved!');
   }
 
 }
