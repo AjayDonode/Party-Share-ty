@@ -59,7 +59,7 @@ export class DashboardPage implements OnInit {
 
   loadAllEvents(){
       this.currentUser = this.userService.getCurrentUser();
-      console.log("current user is "+this.currentUser.uid)
+      console.log("current user is "+this.currentUser.email)
       if(this.currentUser === null ||  this.currentUser === undefined)
         this.router.navigate(['/home'])
       else{
@@ -70,13 +70,13 @@ export class DashboardPage implements OnInit {
   }
 
   loadSharedEvents(){
-    this.currentUser = this.userService.getCurrentUser();
+    //this.currentUser = this.userService.getCurrentUser();
     console.log("current user is "+this.currentUser.email)
     if(this.currentUser === null ||  this.currentUser === undefined)
       this.router.navigate(['/home'])
     else{
     this.eventService.getSharedPartyEventByUserId(this.currentUser.uid).subscribe((res: any) => {
-      console.log(res)
+     // console.log(res)
       this.sharedEvents = res;
     });
    }

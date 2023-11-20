@@ -33,8 +33,7 @@ export class EventService {
   getPartyEventByHost(hostedBy: string) :Observable<PartyEvent[]>{
     //return this.partyEventCollection.doc<PartyEvent>(hostedBy).valueChanges();
     console.log("hosted by "+hostedBy)
-    return this.firestore.collection<PartyEvent>('partyEvents', ref => 
-      ref.where('hostedBy', '==', hostedBy)
+    return this.firestore.collection<PartyEvent>('partyEvents', ref => ref.where('hostedBy', '==', hostedBy)
     ).valueChanges();
   }
 

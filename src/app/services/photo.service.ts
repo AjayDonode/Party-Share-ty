@@ -26,12 +26,10 @@ export class PhotoService {
   }
   
   public async loadSaved() {
-    
     Camera.pickImages({ quality: 100, height: 210, width: 210, correctOrientation: true, limit: 100 }).then(results => {
       if (results.photos.length > 0) {
         for (let i = 0; i < results.photos.length; i++) {
           this.photos.push(results.photos[i]);
-         // this.uploadFileToFileStore(results.photos[i])
         }
       }
     },
@@ -69,7 +67,6 @@ export class PhotoService {
           });
         })
       ).subscribe();
-
       return await this.convertBlobToBase64(blob) as string;
     } catch (e) {
       console.error(e);

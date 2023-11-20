@@ -25,14 +25,17 @@ export class Tab1Page {
   async loadImages(){
    this.photoService.loadSaved().then(response=> {
     this.savedPhotos = response;
-    this.upoadImages()
+    if(this.savedPhotos.length>0){
+    console.log("Uploaded"+this.savedPhotos.length)
+    this.upoadImages(this.savedPhotos)
+   }
   });
   }
 
-  upoadImages(){
-    //this.savedPhotos = this.savedPhotos as GalleryPhoto[];
-    for (let i = 0; i < this.savedPhotos.length; i++) {
-      this.photoService.uploadFileToFileStore(this.savedPhotos[i]).then(output=> {
+  upoadImages(savedPhotos:GalleryPhoto[]){
+    console.log("Uploaded"+savedPhotos.length)
+    for (let i = 0; i < savedPhotos.length; i++) {
+      this.photoService.uploadFileToFileStore(savedPhotos[i]).then(output=> {
       console.log("Uploaded file ")
     })
     }

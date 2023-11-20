@@ -5,6 +5,7 @@ import { PartyImage } from '../VO/party-image';
 import { ModalController } from '@ionic/angular';
 import { SlideShowComponent } from '../component/slide-show/slide-show.component';
 import { GalleryPhoto } from '@capacitor/camera';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-tab3',
@@ -20,13 +21,15 @@ export class Tab3Page {
   selectedSegment:string="all";
   selectedEvent:any;
   partyImages: PartyImage[] = [];
+  currentUserId:any;
   public savedPhotos:GalleryPhoto[]= [];
-  constructor(private eventService:EventService,
+  constructor(private eventService:EventService, private userService:UserService,
     public photoService:PhotoService, 
     private modalController:ModalController) {}
 
   async ngOnInit() {
     // await this.photoService.loadSaved();
+    this.currentUserId  = this.userService.getCurrentUser().uid;
     this.selectedEvent = this.eventService.getSelectedEvent();
     this.photoService.getAllImagesByEvent(this.selectedEvent.id).subscribe(res => {
       this.partyImages = res;
@@ -51,9 +54,9 @@ export class Tab3Page {
      console.log("Uploaded Data  "+response);
      for (let i = 0; i < response.length; i++) {
       console.log("Uploaded file "+i);
-    //   this.photoService.uploadFileToFileStore(this.savedPhotos[i]).then(output=> {
-    //   console.log("Uploaded file "+i);
-    // })
+      this.photoService.uploadFileToFileStore(this.savedPhotos[i]).then(output=> {
+      console.log("Uploaded file "+i);
+    })
     }
    });
    }

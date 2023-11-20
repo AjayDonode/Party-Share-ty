@@ -34,7 +34,7 @@
 	<div *ngIf="selectedSegment === 'myuploads'">
 		<ion-list>
 			<ion-item-sliding *ngFor="let partyImage of partyImages; index as position;" (ionSwipe)="deleteItem(partyImage)">
-			<ion-item>
+			<ion-item *ngIf="partyImage.uploadedBy==currentUserId">
 				<ion-thumbnail slot="start">
 					<!-- <ion-img [src]="photo.webPath"></ion-img> -->
 					<ion-img [src]="partyImage.imageUrl"></ion-img>
@@ -50,8 +50,8 @@
 		</ion-list>
 	</div>
 	  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
-		<ion-fab-button>
-		  <ion-icon name="add" (change)="loadImages()"></ion-icon>
+		<ion-fab-button (click)="loadImages()">
+		  <ion-icon name="add" ></ion-icon>
 		</ion-fab-button>
 	  </ion-fab>
 </ion-content>
