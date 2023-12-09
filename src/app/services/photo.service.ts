@@ -25,10 +25,13 @@ export class PhotoService {
       // this.imageCollection = firestore.collection<PartyImage>('images');
   }
   
-  public async loadSaved() {
-    Camera.pickImages({ quality: 100, height: 210, width: 210, correctOrientation: true, limit: 100 }).then(results => {
+  public async loadSaved(): Promise<GalleryPhoto[]> {
+    await Camera.pickImages({ quality: 100, height: 210, width: 210, correctOrientation: true, limit: 100 }).then(results => {
+      console.log(results);
+      console.log(results.photos);
       if (results.photos.length > 0) {
         for (let i = 0; i < results.photos.length; i++) {
+          console.log(results.photos[i]);
           this.photos.push(results.photos[i]);
         }
       }

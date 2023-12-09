@@ -22,7 +22,6 @@ export class DashboardPage implements OnInit {
   }
 
   ngOnInit() {
-    console.log("init")
     this.loadAllEvents();
     this.loadSharedEvents();
   }
@@ -38,11 +37,13 @@ export class DashboardPage implements OnInit {
     this.router.navigate(['/join-event']);
   }
 
-  updateEvent(eventObj:PartyEvent){
+  updateEvent(eventObj:PartyEvent,event:any){
+    event.stopPropagation();
     this.router.navigate(['/add-event'],{ state: { event: eventObj } });
   }
 
-  async grantEvent(eventObj:PartyEvent){
+  async grantEvent(eventObj:PartyEvent, event:any){
+    event.stopPropagation();
     const modal = await this.modalController.create({
       component: GrantAccessModalPage, 
       componentProps: {
@@ -52,14 +53,14 @@ export class DashboardPage implements OnInit {
     await modal.present();
   }
 
-  removeEvent(eventObj:PartyEvent){
+  removeEvent(eventObj:PartyEvent,event:any){
+    event.stopPropagation();
     console.log(eventObj);
     this.eventService.deletePartyEvent(eventObj);
   }
 
   loadAllEvents(){
       this.currentUser = this.userService.getCurrentUser();
-      console.log("current user is "+this.currentUser.email)
       if(this.currentUser === null ||  this.currentUser === undefined)
         this.router.navigate(['/home'])
       else{
@@ -70,13 +71,10 @@ export class DashboardPage implements OnInit {
   }
 
   loadSharedEvents(){
-    //this.currentUser = this.userService.getCurrentUser();
-    console.log("current user is "+this.currentUser.email)
     if(this.currentUser === null ||  this.currentUser === undefined)
       this.router.navigate(['/home'])
     else{
     this.eventService.getSharedPartyEventByUserId(this.currentUser.uid).subscribe((res: any) => {
-     // console.log(res)
       this.sharedEvents = res;
     });
    }
@@ -90,7 +88,7 @@ export class DashboardPage implements OnInit {
   
   logOut(){
   this.userService.logOut();
-  this.router.navigate([''])
+  this.router.navigate(['/sign-in'])
   }
 
   showProfile(){

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { PartyImage } from 'src/app/VO/party-image';
 
@@ -14,19 +14,12 @@ export class SlideShowComponent  implements OnInit {
   @Input()
   selectedImage!: PartyImage;
   @Input()
-  imageIndex:Number=0
-
-
+  imageIndex!: Number;
+ 
   constructor(private modalController: ModalController) { }
 
-  ngOnInit() {}
-
-  getImage(selectedImage:PartyImage){
-    var imageUrl = selectedImage.imageUrl;
-    if(imageUrl == undefined){  
-     imageUrl = "/assets/dummy.jpeg";
-    }
-    return imageUrl;
+  ngOnInit() {
+    this.imageIndex = 7;
   }
 
 

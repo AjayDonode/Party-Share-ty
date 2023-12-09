@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController, NavParams } from '@ionic/angular';
 import { EventUserAccess } from 'src/app/VO/events-user';
 import { EventUserAccessService } from 'src/app/services/event-user-access.service';
+import { User } from 'src/app/services/user';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -11,12 +12,13 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class GrantAccessModalPage implements OnInit {
   patchEventId:any;
-  userAccessList:EventUserAccess[] = [];
+  userAccessList:any;
   constructor(private navParams: NavParams, private userService:UserService, private accessServcie:EventUserAccessService, public modalController: ModalController) { }
   
   ngOnInit() {
     this.patchEventId = this.navParams.get('data');
     this.accessServcie.getAccessList(this.patchEventId).subscribe(res=> {
+      console.log(res);
     this.userAccessList = res});
   }
 

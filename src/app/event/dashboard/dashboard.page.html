@@ -35,28 +35,25 @@
       <div *ngIf="eventList.length > 0; else noEventsMessage">
         <swiper-container pagination="true" pagination-type="fraction">
           <swiper-slide *ngFor="let event of eventList">
-            <ion-card>
-              <!-- <ion-card  *ngFor="let event of eventList" style="background-image: url({{event.imageUrl}})" ></ion-card> -->
-              <div class="image-container"> <img alt="{{event.title}}" [src]="event.imageUrl" class="event-image" />
-              </div>
+            <ion-card (click)="openMain(event)" >
               <ion-card-header>
                 <ion-card-title>{{event.title}} </ion-card-title>
                 <ion-card-subtitle>{{event.name}}</ion-card-subtitle>
               </ion-card-header>
               <ion-card-content>
+                <div class="image-container"> 
+                  <img alt="{{event.title}}" [src]="event.imageUrl" class="event-image" />
+                </div>
                 {{event.description}}
               </ion-card-content>
               <ion-footer>
                 <ion-toolbar>
-                  <ion-buttons slot="start">
-                    <ion-button fill="clear" (click)="openMain(event)">Upload</ion-button>
-                  </ion-buttons>
                   <ion-buttons slot="end">
-                    <ion-button fill="clear"><ion-icon name="qr-code-outline"></ion-icon></ion-button>
-                    <ion-button fill="clear" (click)="grantEvent(event)"><ion-icon name="id-card-outline"></ion-icon></ion-button>
-                    <ion-button fill="clear" (click)="updateEvent(event)"><ion-icon
+                   
+                    <ion-button fill="clear" (click)="grantEvent(event,$event)"><ion-icon name="id-card-outline"></ion-icon></ion-button>
+                    <ion-button fill="clear" (click)="updateEvent(event,$event)"><ion-icon
                         name="create-outline"></ion-icon></ion-button>
-                    <ion-button fill="clear" (click)="removeEvent(event)"><ion-icon
+                    <ion-button fill="clear" (click)="removeEvent(event,$event)"><ion-icon
                         name="trash-outline"></ion-icon></ion-button>
                   </ion-buttons>
                 </ion-toolbar>
@@ -93,9 +90,9 @@
                   <ion-buttons slot="end">
                     <ion-button fill="clear"><ion-icon name="qr-code-outline"></ion-icon></ion-button>
                     <ion-button fill="clear"><ion-icon name="share-outline"></ion-icon></ion-button>
-                    <ion-button fill="clear" (click)="updateEvent(event)"><ion-icon
+                    <ion-button fill="clear" (click)="updateEvent(event,$event)"><ion-icon
                         name="create-outline"></ion-icon></ion-button>
-                    <ion-button fill="clear" (click)="removeEvent(event)"><ion-icon
+                    <ion-button fill="clear" (click)="removeEvent(event,$event)"><ion-icon
                         name="trash-outline"></ion-icon></ion-button>
                   </ion-buttons>
                 </ion-toolbar>

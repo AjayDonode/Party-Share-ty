@@ -7,11 +7,12 @@ import {
   AngularFirestoreDocument,
 } from '@angular/fire/compat/firestore';
 import { Router } from '@angular/router';
-import { Observable, Observer } from 'rxjs';
+import { BehaviorSubject, Observable, Observer } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  authState = new BehaviorSubject(false);
   userData: any; // Save logged in user data
   constructor(
     public afs: AngularFirestore, // Inject Firestore service
@@ -25,10 +26,10 @@ export class AuthService {
       if (user) {
         this.userData = user;
         localStorage.setItem('user', JSON.stringify(this.userData));
-        JSON.parse(localStorage.getItem('user')!);
+        this.authState.next(true);
       } else {
         localStorage.setItem('user', 'null');
-       // JSON.parse(localStorage.getItem('user')!);
+        this.authState.next(false);
       }
     });
   }
@@ -136,5 +137,11 @@ export class AuthService {
   getCurrentUser(){
     const user:User = JSON.parse(localStorage.getItem('user')!);
     return user;
+  }
+
+  isAuthenticated(): boolean {
+    console.log("Auth State"+ this.authState.value)
+    console.log("Auth State"+ this.getCurrentUser())
+    return (this.authState.value || (this.getCurrentUser().uid !=null));
   }
 }

@@ -16,16 +16,16 @@
   <ion-content>
     <ion-card class="profile-card">
       <ion-card-header>
-        <ion-card-title>Grant All<ion-checkbox>
+        <!-- <ion-card-title>Grant All </ion-card-title>
         
-        </ion-checkbox> </ion-card-title>
-        <!-- <ion-card-subtitle>{{partyEvent.name}}</ion-card-subtitle> -->
+        </ion-checkbox> </ion-card-title> -->
+        <ion-card-subtitle> Add remove Access</ion-card-subtitle>
       </ion-card-header>
       <div>
         <ion-list *ngFor="let userAccess of userAccessList" >
           <ion-item>
-            <ion-checkbox [checked]="userAccess.granted" (ionChange)="updateGrant($event,userAccess)">
-              {{userAccess.userid}}
+            <ion-checkbox [checked]="userAccess.eventUser.granted" (ionChange)="updateGrant($event,userAccess.eventUser)">
+              {{userAccess.user.email}}
             </ion-checkbox>
           </ion-item>
         </ion-list>

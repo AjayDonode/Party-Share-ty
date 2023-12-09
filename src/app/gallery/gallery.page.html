@@ -1,0 +1,60 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-buttons slot="start" >
+			<ion-back-button defaultHref="/dashboard"></ion-back-button>
+		  </ion-buttons>
+		<ion-title> {{selectedEvent.name}} </ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<ion-segment value="all"  (ionChange)="onSegmentChange($event)">
+		<ion-segment-button value="all">
+		  <ion-label>All</ion-label>
+		</ion-segment-button>
+		<ion-segment-button value="myuploads">
+			<ion-label>My Uploads</ion-label>
+		</ion-segment-button>
+		<ion-segment-button value="pin">
+		  <ion-icon name="pin"></ion-icon>
+		</ion-segment-button>
+		<ion-segment-button value="download">
+		  <ion-icon name="download"></ion-icon>
+		</ion-segment-button>
+	  </ion-segment>
+	  <div *ngIf="selectedSegment === 'all'">
+		<ion-grid>
+			<ion-row>
+			<ion-col size="6" *ngFor="let partyImage of partyImages let i = index" (click)="openGalleryImages(partyImage,i)">
+				<img [src]="partyImage.imageUrl" style="width: 100%;">
+			</ion-col>
+			</ion-row>
+		</ion-grid>
+	</div>
+	<div *ngIf="selectedSegment === 'myuploads'">
+		<ion-list>
+			<ion-item-sliding *ngFor="let partyImage of partyImages; index as position;" (ionSwipe)="deleteItem(partyImage)">
+			<ion-item *ngIf="partyImage.uploadedBy==currentUserId">
+				<ion-thumbnail slot="start">
+					<!-- <ion-img [src]="photo.webPath"></ion-img> -->
+					<ion-img [src]="partyImage.imageUrl"></ion-img>
+				</ion-thumbnail>
+				 <ion-label class="ion-text-wrap"> {{partyImage.id}} </ion-label> 
+			</ion-item>
+				<ion-item-options side="end">
+					<ion-item-option color="danger" (ionSwipe)="deleteItem(partyImage)">
+					  Delete
+					</ion-item-option>
+		</ion-item-options>
+		</ion-item-sliding>
+		</ion-list>
+	</div>
+	<div *ngIf="selectedSegment === 'download'">
+		<ion-button (click)="saveToGallery()">  <ion-icon name="download"></ion-icon> Sync</ion-button>
+	</div>
+	  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+		<ion-fab-button (click)="loadImages()">
+		  <ion-icon name="add" ></ion-icon>
+		</ion-fab-button>
+	  </ion-fab>
+</ion-content>

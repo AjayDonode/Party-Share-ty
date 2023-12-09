@@ -1,8 +1,8 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.dnex.org',
-  appName: 'Share-Photos1.0',
+  appId: 'com.example.app',
+  appName: 'SharePhotos',
   webDir: 'www',
   server: {
     androidScheme: 'https'

@@ -6,13 +6,17 @@ import { ModalController } from '@ionic/angular';
 import { SlideShowComponent } from '../component/slide-show/slide-show.component';
 import { GalleryPhoto } from '@capacitor/camera';
 import { UserService } from '../services/user.service';
+import { Plugins } from '@capacitor/core';
+import { Filesystem, FilesystemDirectory } from '@capacitor/filesystem';
+import { Media, MediaAlbum, MediaSaveOptions } from "@capacitor-community/media";
+const { Camera, Photos} = Plugins;
 
 @Component({
-  selector: 'app-tab3',
-  templateUrl: 'tab3.page.html',
-  styleUrls: ['tab3.page.scss']
+  selector: 'app-gallery',
+  templateUrl: 'gallery.page.html',
+  styleUrls: ['gallery.page.scss']
 })
-export class Tab3Page {
+export class GalleryPage {
   slideOpts = {
     initialSlide: 0,
     slidesPerView: 2,
@@ -61,9 +65,7 @@ export class Tab3Page {
 
   upoadImages(savedPhotos:GalleryPhoto[]){
     for (let i = 0; i < savedPhotos.length; i++) {
-      console.log("Started File"+i);
       this.photoService.uploadFileToFileStore(savedPhotos[i]).then(output=> {
-      console.log("Completed File"+i);
     });
     
     }
@@ -76,6 +78,32 @@ export class Tab3Page {
     this.photoService.deleteImage(item).then(()=>{
       //this.getPartyEvents();
     });
+  }
+
+  
+  saveToGallery(){
+   let albumName = this.selectedEvent.name; 
+    this.checkOrCreateAlbum(albumName);
+  }
+
+  async checkOrCreateAlbum(albumName: string) {
+    let savedAlbum:any = await this.getAlbumByName(albumName)
+    for (let i = 0; i < this.partyImages.length; i++) {
+      console.log(this.partyImages[i].imageUrl);
+      let opts: MediaSaveOptions = { path: this.partyImages[i].imageUrl, albumIdentifier: savedAlbum };
+        await Media.savePhoto(opts);
+    };
+  }
+
+  async getAlbumByName(albumName: string) {
+    const {albums} = await Media.getAlbums();
+    let demoAlbum = albums.find(a => a.name === albumName);
+    if (demoAlbum === undefined) {
+      await Media.createAlbum({ name: albumName });
+      const { albums: updatedAlbums } = await Media.getAlbums();
+      demoAlbum = updatedAlbums.find(a => a.name === albumName);
+    }
+    return demoAlbum?.identifier;
   }
    
 

@@ -1,31 +1,50 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Observable } from 'rxjs';
+import { Observable, from, map, switchMap } from 'rxjs';
 import { EventUserAccess } from '../VO/events-user';
 import { PartyEvent } from '../VO/party-event';
+import { User } from './user';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EventUserAccessService {
 
-  constructor(private firestore: AngularFirestore) { }
+  constructor(private firestore: AngularFirestore, private userService:UserService) { }
 
   // Function to check if the current user has access granted
   getEventUserAccess(userid: string): Observable<EventUserAccess[]> {
-    console.log("User ID "+userid);
     return this.firestore
       .collection<EventUserAccess>('eventUser', ref => 
       ref.where('userid', '==', userid)
     ).valueChanges();
   }
 
-  getAccessList(eventid: string): Observable<EventUserAccess[]> {
+  getAccessList(eventid: string) {
+    let currentUserId = this.userService.getCurrentUser().uid;
     console.log("Event ID "+eventid);
-    return this.firestore
-      .collection<EventUserAccess>('eventUser', ref => 
-      ref.where('eventid', '==', eventid)
-    ).valueChanges();
+    return this.firestore.collection<EventUserAccess>('eventUser', ref => 
+      ref.where('eventid', '==', eventid)).valueChanges().pipe(
+        switchMap(eventUsers => {
+          let userIDs = eventUsers.map(eu => eu.userid);
+          console.log("userIDs"+userIDs)
+          if (userIDs.length === 0) {
+            // If there are no userIDs, return an empty array to avoid unnecessary query
+            return from([[]]);
+          } 
+         
+        return this.firestore.collection('users', ref => ref.where('uid', 'in', userIDs)).valueChanges({ idField: 'uid' })
+        .pipe(map(users=>{
+          return users.map(user => {
+            // if(user.uid !== currentUserId){
+            const eventUser = eventUsers.find(eu => eu.userid === user.uid);
+            return { user, eventUser };
+            // }
+          })
+        }));
+      })
+    );
   }
 
  

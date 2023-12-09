@@ -48,6 +48,9 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
     <key>NSPhotoLibraryUsageDescription</key>
-    <string>Read Photos</string>
+    <string>Read Photos from gallery</string>
+	  <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>Adds Photos to library</string>
+	
 </dict>
 </plist>

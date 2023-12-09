@@ -2,6 +2,10 @@
     width: 100%;
     overflow: hidden;
     position: relative;
+    border-width: 1px;
+    border-style:solid;
+    border-radius: 5px;
+    border-color: rgb(46, 45, 45);
     padding-bottom: 75%; /* Maintain aspect ratio 4:3 */
   }
   
