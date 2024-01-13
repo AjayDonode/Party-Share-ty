@@ -18,7 +18,6 @@ export class GrantAccessModalPage implements OnInit {
   ngOnInit() {
     this.patchEventId = this.navParams.get('data');
     this.accessServcie.getAccessList(this.patchEventId).subscribe(res=> {
-      console.log(res);
     this.userAccessList = res});
   }
 

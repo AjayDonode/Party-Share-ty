@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ActionSheetController, MenuController, ModalController } from '@ionic/angular';
+import { ActionSheetController, AlertController, MenuController, ModalController } from '@ionic/angular';
 import { PartyEvent } from 'src/app/VO/party-event';
 import { EventService } from 'src/app/services/event.service';
 import { User } from 'src/app/services/user';
@@ -17,7 +17,10 @@ export class DashboardPage implements OnInit {
   eventList: any[] = [];
   sharedEvents: any[] = [];
   currentUser:any = null;
-  constructor(public router:Router, public eventService:EventService,public userService:UserService, private modalController: ModalController) { 
+  constructor(public router:Router, 
+    public eventService:EventService, 
+    public userService:UserService,
+    private modalController: ModalController) { 
    
   }
 
@@ -51,12 +54,6 @@ export class DashboardPage implements OnInit {
       }
     });
     await modal.present();
-  }
-
-  removeEvent(eventObj:PartyEvent,event:any){
-    event.stopPropagation();
-    console.log(eventObj);
-    this.eventService.deletePartyEvent(eventObj);
   }
 
   loadAllEvents(){
@@ -94,6 +91,29 @@ export class DashboardPage implements OnInit {
   showProfile(){
     this.router.navigate(['/profile'])
   }
+  showTabs(){
+    this.router.navigate(['/tabs'])
+  }
  
+  async removeEvent(eventObj:PartyEvent,event:any){
+    if(event.detail.role === 'confirm')
+      this.eventService.deletePartyEvent(eventObj);
+  }
+
+  public alertButtons = [
+    {
+      text: 'Cancel',
+      role: 'cancel',
+      handler: () => {
+      },
+    },
+    {
+      text: 'OK',
+      role: 'confirm',
+      handler: () => {
+      },
+    },
+  ];
+
 }
 

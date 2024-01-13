@@ -8,7 +8,7 @@
 </ion-header>
 <ion-content [fullscreen]="true">
   <ion-card>
-    <ion-searchbar placeholder="Enter event Id" [debounce]="1000" (ionInput)="onSearch($event)"></ion-searchbar>
+    <ion-searchbar placeholder="Enter event id to join" [debounce]="1000" (ionInput)="onSearch($event)"></ion-searchbar>
     <div *ngIf="partyEvent">
       <!-- <ion-card> -->
         <!-- <ion-card  *ngFor="let event of eventList" style="background-image: url({{event.imageUrl}})" ></ion-card> -->
@@ -49,7 +49,11 @@
     </ion-card-header>
     <div>
       <ion-list *ngFor="let userAccess of userAccessList" >
-        <ion-item><ion-label>{{userAccess.eventid}}</ion-label> 
+        <ion-item>
+          <ion-thumbnail item-left>
+            <img src="assets/thumicon.png" />
+          </ion-thumbnail>
+            &nbsp; {{userAccess.eventid}}
           <ion-icon color="warning" slot="end" name="warning-outline" size="large" *ngIf=!userAccess.granted></ion-icon>
           <ion-icon color="success" slot="end" name="checkmark-done-circle-outline" size="large"  *ngIf=userAccess.granted></ion-icon>
         </ion-item>

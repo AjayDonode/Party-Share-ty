@@ -4,56 +4,51 @@
 			<ion-back-button defaultHref="/dashboard"></ion-back-button>
 		  </ion-buttons>
 		<ion-title> {{selectedEvent.name}} </ion-title>
+		<ion-progress-bar *ngIf="isProgressing" color="success" [value]="progress / 100"></ion-progress-bar>
 	</ion-toolbar>
 </ion-header>
 
 <ion-content>
-	<ion-segment value="all"  (ionChange)="onSegmentChange($event)">
-		<ion-segment-button value="all">
-		  <ion-label>All</ion-label>
-		</ion-segment-button>
-		<ion-segment-button value="myuploads">
-			<ion-label>My Uploads</ion-label>
-		</ion-segment-button>
-		<ion-segment-button value="pin">
-		  <ion-icon name="pin"></ion-icon>
-		</ion-segment-button>
-		<ion-segment-button value="download">
-		  <ion-icon name="download"></ion-icon>
-		</ion-segment-button>
-	  </ion-segment>
-	  <div *ngIf="selectedSegment === 'all'">
-		<ion-grid>
-			<ion-row>
-			<ion-col size="6" *ngFor="let partyImage of partyImages let i = index" (click)="openGalleryImages(partyImage,i)">
-				<img [src]="partyImage.imageUrl" style="width: 100%;">
-			</ion-col>
-			</ion-row>
-		</ion-grid>
-	</div>
-	<div *ngIf="selectedSegment === 'myuploads'">
-		<ion-list>
-			<ion-item-sliding *ngFor="let partyImage of partyImages; index as position;" (ionSwipe)="deleteItem(partyImage)">
-			<ion-item *ngIf="partyImage.uploadedBy==currentUserId">
-				<ion-thumbnail slot="start">
-					<!-- <ion-img [src]="photo.webPath"></ion-img> -->
-					<ion-img [src]="partyImage.imageUrl"></ion-img>
-				</ion-thumbnail>
-				 <ion-label class="ion-text-wrap"> {{partyImage.id}} </ion-label> 
+		<div class="horizontal-list">
+			<div class="scroll-items">
+			<ion-item text-center lines="none" class="horizontal-item"  (click)="selectUser('all')">
+					<ion-avatar text-center [class.selected]="selectedUser === 'all'">
+						<img src="assets/thumicon.png"/>
+			  </ion-avatar>
+			  <span>All</span>
 			</ion-item>
-				<ion-item-options side="end">
-					<ion-item-option color="danger" (ionSwipe)="deleteItem(partyImage)">
-					  Delete
-					</ion-item-option>
-		</ion-item-options>
-		</ion-item-sliding>
-		</ion-list>
-	</div>
-	<div *ngIf="selectedSegment === 'download'">
-		<ion-button (click)="saveToGallery()">  <ion-icon name="download"></ion-icon> Sync</ion-button>
-	</div>
+			<ion-item lines="none" *ngFor="let eventUser of eventUsers" class="horizontal-item"  (click)="selectUser(eventUser.user.uid)">
+			  <ion-avatar [class.selected]="selectedUser === eventUser.user.uid">
+				<img [src]="eventUser.user.photoURL"/>
+			  </ion-avatar>
+			  <span>{{eventUser.user.displayName}}</span>
+			</ion-item>
+		  </div>
+		</div>
+			<ion-grid>
+				<ion-row>
+				<ion-col size="6" *ngFor="let partyImage of filteredPartyImages let i = index" (click)="openGalleryImages(partyImage,i)">
+					<div style="position: relative; display: inline-block; width: 100%;">
+					<img [src]="partyImage.imageUrl" style="width: 100%;">
+					<!-- <ion-button fill="clear" style="position: absolute; top: 0; left: 0; z-index: 10;">
+						<ion-icon name="ellipse-outline"></ion-icon>
+						<ion-icon name="checkmark-circle-outline"></ion-icon>
+						<ion-icon name="checkmark-done-circle-outline"></ion-icon>
+        			</ion-button> -->
+					<ion-button *ngIf="partyImage.uploadedBy==currentUserId" fill="clear" style="position: absolute; top: 0; right: 0; z-index: 10;" (click)="deleteItem(partyImage, $event)">
+						<ion-icon name="trash"></ion-icon>
+        			</ion-button> 
+				</div>
+				</ion-col>
+				
+				</ion-row>
+			</ion-grid>
+	
 	  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
-		<ion-fab-button (click)="loadImages()">
+		 <ion-fab-button (click)="saveToGallery()" [disabled]="isProgressing">
+			<ion-icon name="download" ></ion-icon>
+		  </ion-fab-button>
+		<ion-fab-button (click)="loadImages()" [disabled]="isProgressing">
 		  <ion-icon name="add" ></ion-icon>
 		</ion-fab-button>
 	  </ion-fab>

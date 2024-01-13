@@ -37,10 +37,8 @@ export class EventUserAccessService {
         return this.firestore.collection('users', ref => ref.where('uid', 'in', userIDs)).valueChanges({ idField: 'uid' })
         .pipe(map(users=>{
           return users.map(user => {
-            // if(user.uid !== currentUserId){
             const eventUser = eventUsers.find(eu => eu.userid === user.uid);
             return { user, eventUser };
-            // }
           })
         }));
       })

@@ -140,8 +140,6 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    console.log("Auth State"+ this.authState.value)
-    console.log("Auth State"+ this.getCurrentUser())
     return (this.authState.value || (this.getCurrentUser().uid !=null));
   }
 }

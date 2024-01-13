@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './services/auth.guard';
 
-// import { LoginPage } from './login/login.page';
-// import { RegisterPage } from './register/register.page';
 const routes: Routes = [
   
   {
@@ -37,8 +35,8 @@ const routes: Routes = [
     loadChildren: () => import('./user/verify-email/verify-email.module').then( m => m.VerifyEmailPageModule)
   },
   {
-    path: 'dashboard',
-    loadChildren: () => import('./event/dashboard/dashboard.module').then( m => m.DashboardPageModule)
+    path: 'tabs',
+    loadChildren: () => import('./tabs/tabs.module').then( m => m.TabsPageModule)
   },
   {
     path: 'add-event',

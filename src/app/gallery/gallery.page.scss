@@ -2,3 +2,40 @@ ion-thumbnail {
     --size: 100px;
     --border-radius: 8px;
   }
+
+  .horizontal-list {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  
+  .scroll-items {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .horizontal-item {
+  flex-direction: column; /* Stack avatar and text vertically */
+  align-items: center; /* Center items horizontally */
+  justify-content: center; /* Center items vertically if needed */
+  margin-right: 5px; /* Constant distance of 5px */
+  }
+
+  .horizontal-item:last-child {
+    margin-right: 0;
+  }
+
+  .selected {
+    border: 2px solid blue; // or any other style to indicate selection
+  }
+  
+  .user-avatar {
+  --size: 100px; /* Adjust size as needed */
+  --border-radius: 8px; /* Adjust border radius as needed */
+  margin-bottom: 4px; /* Adjust space between avatar and name */
+  }
+
+  ion-fab-button {
+    margin-bottom: 10px; /* Adjust spacing as needed */
+  }
+  

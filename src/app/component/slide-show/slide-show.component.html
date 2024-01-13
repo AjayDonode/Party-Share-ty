@@ -1,14 +1,19 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button  (click)="closeModal()">
+        <ion-icon name="close-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content>
-  <swiper-container pagination="true" pagination-type="fraction">
-    <swiper-slide *ngFor="let image of images" [activeIndex]="4">
-      
-      <h1>{{imageIndex}}</h1>
-      <img [src]="image.imageUrl" style="width: 100%; height: 100%;"> 
+  <swiper-container appSwiper #swiper  [config]="swiperConfig" pagination="true" pagination-type="fraction">
+    <swiper-slide *ngFor="let image of images">
+      <img [src]="image.imageUrl"> 
       <!-- <img [src]="getImage(image)"> -->
     </swiper-slide>
   </swiper-container>
-  <ion-button fill="clear" size="small" class="close-button" (click)="closeModal()">
-    <ion-icon name="close-circle-outline"></ion-icon>
-  </ion-button>
+  
 </ion-content>

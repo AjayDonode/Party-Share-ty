@@ -47,10 +47,18 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
-    <key>NSPhotoLibraryUsageDescription</key>
+    
+	<key>NSPhotoLibraryUsageDescription</key>
     <string>Read Photos from gallery</string>
-	  <key>NSPhotoLibraryAddUsageDescription</key>
+	
+	<key>NSPhotoLibraryAddUsageDescription</key>
     <string>Adds Photos to library</string>
+
+	<key>UIFileSharingEnabled</key>
+    <string>Upload Photos to other devices</string>
+
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+    <string>Upload Photos to other devices</string>
 	
 </dict>
 </plist>
